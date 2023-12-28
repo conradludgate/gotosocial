@@ -64,6 +64,11 @@ func Initialize() error {
 		if insecure {
 			opts = append(opts, otlptracegrpc.WithInsecure())
 		}
+		if config.GetTracingAuthorization() != "" {
+			opts = append(opts, otlptracegrpc.WithHeaders(map[string]string{
+				"Authorization": config.GetTracingAuthorization(),
+			}))
+		}
 		exp, err := otlptracegrpc.New(context.Background(), opts...)
 		if err != nil {
 			return fmt.Errorf("building tracing exporter: %w", err)
@@ -75,6 +80,11 @@ func Initialize() error {
 		}
 		if insecure {
 			opts = append(opts, otlptracehttp.WithInsecure())
+		}
+		if config.GetTracingAuthorization() != "" {
+			opts = append(opts, otlptracehttp.WithHeaders(map[string]string{
+				"Authorization": config.GetTracingAuthorization(),
+			}))
 		}
 		exp, err := otlptracehttp.New(context.Background(), opts...)
 		if err != nil {

@@ -2,7 +2,7 @@
 // GoToSocial
 // Copyright (C) GoToSocial Authors admin@gotosocial.org
 // SPDX-License-Identifier: AGPL-3.0-or-later
-//
+// 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
@@ -2100,6 +2100,31 @@ func GetTracingInsecureTransport() bool { return global.GetTracingInsecureTransp
 // SetTracingInsecureTransport safely sets the value for global configuration 'TracingInsecureTransport' field
 func SetTracingInsecureTransport(v bool) { global.SetTracingInsecureTransport(v) }
 
+// GetTracingAuthorization safely fetches the Configuration value for state's 'TracingAuthorization' field
+func (st *ConfigState) GetTracingAuthorization() (v string) {
+	st.mutex.RLock()
+	v = st.config.TracingAuthorization
+	st.mutex.RUnlock()
+	return
+}
+
+// SetTracingAuthorization safely sets the Configuration value for state's 'TracingAuthorization' field
+func (st *ConfigState) SetTracingAuthorization(v string) {
+	st.mutex.Lock()
+	defer st.mutex.Unlock()
+	st.config.TracingAuthorization = v
+	st.reloadToViper()
+}
+
+// TracingAuthorizationFlag returns the flag name for the 'TracingAuthorization' field
+func TracingAuthorizationFlag() string { return "tracing-authorization" }
+
+// GetTracingAuthorization safely fetches the value for global configuration 'TracingAuthorization' field
+func GetTracingAuthorization() string { return global.GetTracingAuthorization() }
+
+// SetTracingAuthorization safely sets the value for global configuration 'TracingAuthorization' field
+func SetTracingAuthorization(v string) { global.SetTracingAuthorization(v) }
+
 // GetMetricsEnabled safely fetches the Configuration value for state's 'MetricsEnabled' field
 func (st *ConfigState) GetMetricsEnabled() (v bool) {
 	st.mutex.RLock()
@@ -3749,3 +3774,4 @@ func GetRequestIDHeader() string { return global.GetRequestIDHeader() }
 
 // SetRequestIDHeader safely sets the value for global configuration 'RequestIDHeader' field
 func SetRequestIDHeader(v string) { global.SetRequestIDHeader(v) }
+
