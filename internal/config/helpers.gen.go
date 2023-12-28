@@ -2125,6 +2125,31 @@ func GetTracingAuthorization() string { return global.GetTracingAuthorization() 
 // SetTracingAuthorization safely sets the value for global configuration 'TracingAuthorization' field
 func SetTracingAuthorization(v string) { global.SetTracingAuthorization(v) }
 
+// GetTracingPath safely fetches the Configuration value for state's 'TracingPath' field
+func (st *ConfigState) GetTracingPath() (v string) {
+	st.mutex.RLock()
+	v = st.config.TracingPath
+	st.mutex.RUnlock()
+	return
+}
+
+// SetTracingPath safely sets the Configuration value for state's 'TracingPath' field
+func (st *ConfigState) SetTracingPath(v string) {
+	st.mutex.Lock()
+	defer st.mutex.Unlock()
+	st.config.TracingPath = v
+	st.reloadToViper()
+}
+
+// TracingPathFlag returns the flag name for the 'TracingPath' field
+func TracingPathFlag() string { return "tracing-path" }
+
+// GetTracingPath safely fetches the value for global configuration 'TracingPath' field
+func GetTracingPath() string { return global.GetTracingPath() }
+
+// SetTracingPath safely sets the value for global configuration 'TracingPath' field
+func SetTracingPath(v string) { global.SetTracingPath(v) }
+
 // GetMetricsEnabled safely fetches the Configuration value for state's 'MetricsEnabled' field
 func (st *ConfigState) GetMetricsEnabled() (v bool) {
 	st.mutex.RLock()

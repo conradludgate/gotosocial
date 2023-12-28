@@ -140,6 +140,7 @@ type Configuration struct {
 	TracingEndpoint          string `name:"tracing-endpoint" usage:"Endpoint of your trace collector. Eg., 'localhost:4317' for gRPC, 'localhost:4318' for http"`
 	TracingInsecureTransport bool   `name:"tracing-insecure-transport" usage:"Disable TLS for the gRPC or HTTP transport protocol"`
 	TracingAuthorization     string `name:"tracing-authorization" usage:"Authorization header for the OTLP endpoint"`
+	TracingPath              string `name:"tracing-path" usage:"HTTP path for the OTLP endpoint"`
 
 	MetricsEnabled      bool   `name:"metrics-enabled" usage:"Enable OpenTelemetry based metrics support."`
 	MetricsAuthEnabled  bool   `name:"metrics-auth-enabled" usage:"Enable HTTP Basic Authentication for Prometheus metrics endpoint"`

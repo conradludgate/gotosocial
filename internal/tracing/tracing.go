@@ -86,6 +86,9 @@ func Initialize() error {
 				"Authorization": config.GetTracingAuthorization(),
 			}))
 		}
+		if config.GetTracingPath() != "" {
+			opts = append(opts, otlptracehttp.WithURLPath(config.GetTracingPath()))
+		}
 		exp, err := otlptracehttp.New(context.Background(), opts...)
 		if err != nil {
 			return fmt.Errorf("building tracing exporter: %w", err)
